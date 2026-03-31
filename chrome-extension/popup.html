@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 380px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+    }
+    
+    .container {
+      padding: 16px;
+    }
+    
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #2e7d32;
+    }
+    
+    .logo {
+      width: 40px;
+      height: 40px;
+      background: #2e7d32;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+    }
+    
+    .title h1 {
+      font-size: 18px;
+      color: #1a472a;
+      margin: 0;
+    }
+    
+    .title p {
+      font-size: 11px;
+      color: #666;
+      margin: 2px 0 0;
+    }
+    
+    .language-selector {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      display: flex;
+      gap: 5px;
+    }
+    
+    .lang-btn {
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .job-info {
+      background: white;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .job-title {
+      font-weight: bold;
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    
+    .company {
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .rating-summary {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .rating-left {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+    
+    .average-rating {
+      font-size: 28px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+    
+    .stars {
+      font-size: 14px;
+      color: #ffc107;
+    }
+    
+    .total-reviews {
+      font-size: 11px;
+      color: #666;
+    }
+    
+    .review-form {
+      background: white;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 12px;
+    }
+    
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #333;
+    }
+    
+    select, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: inherit;
+    }
+    
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    button:hover {
+      background: #1a472a;
+    }
+    
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .reviews-list {
+      background: white;
+      border-radius: 12px;
+      padding: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .review-item {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .review-item:last-child {
+      border-bottom: none;
+    }
+    
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    
+    .review-stars {
+      font-size: 12px;
+      color: #ffc107;
+    }
+    
+    .review-verdict {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+    
+    .verdict-real {
+      background: #c8e6c9;
+      color: #2e7d32;
+    }
+    
+    .verdict-fake {
+      background: #ffcdd2;
+      color: #c62828;
+    }
+    
+    .verdict-suspicious {
+      background: #fff3e0;
+      color: #ef6c00;
+    }
+    
+    .review-date {
+      font-size: 10px;
+      color: #999;
+    }
+    
+    .review-text {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.4;
+    }
+    
+    .loading, .no-reviews {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 13px;
+    }
+    
+    .login-prompt {
+      text-align: center;
+      padding: 16px;
+      background: #f5f5f5;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .login-prompt p {
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: #666;
+    }
+    
+    .lang-select {
+	padding: 4px 8px;
+	font-size: 11px;
+	border-radius: 6px;
+	border: 1px solid #ddd;
+	background: white;
+	cursor: pointer;
+	}
+
+	.lang-select:hover {
+	background: #f5f5f5;
+	}
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="language-selector">
+		<select id="languageSelect" class="lang-select">
+			<option value="es">🇪🇸 Español</option>
+			<option value="en">🇺🇸 English</option>
+			<option value="fr">🇫🇷 Français</option>
+			<option value="de">🇩🇪 Deutsch</option>
+			<option value="pt">🇵🇹 Português</option>
+		</select>
+	</div>
+    
+    <div class="header">
+		<div class="logo">
+			<img src="icons/icon48.png" alt="ApplyGuard" style="width: 40px; height: 40px; border-radius: 10px;">
+		</div>
+      <div class="title">
+        <h1 id="extensionName">ApplyGuard</h1>
+        <p id="tagline">Protege tus postulaciones</p>
+      </div>
+    </div>
+    
+    <div id="jobInfo" class="job-info" style="display: none;">
+      <div class="job-title" id="jobTitle"></div>
+      <div class="company" id="companyName"></div>
+    </div>
+    
+    <div id="ratingSummary" class="rating-summary" style="display: none;">
+      <div class="rating-left">
+        <span class="average-rating" id="averageRating">0.0</span>
+        <div>
+          <div class="stars" id="stars">☆☆☆☆☆</div>
+          <span class="total-reviews" id="totalReviews">0 valoraciones</span>
+        </div>
+      </div>
+    </div>
+    
+    <div id="loginPrompt" class="login-prompt" style="display: none;">
+      <p id="loginMessage">Inicia sesión para comentar</p>
+      <button id="loginButton">Iniciar sesión</button>
+    </div>
+    
+    <div id="reviewForm" class="review-form" style="display: none;">
+      <div class="form-group">
+        <label id="verdictLabel">Dictamen</label>
+        <select id="verdictSelect">
+          <option value="real">✅ Real</option>
+          <option value="fake">❌ Falso</option>
+          <option value="suspicious">⚠️ Sospechoso</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label id="ratingLabel">Puntuación</label>
+        <select id="ratingSelect">
+          <option value="5">⭐⭐⭐⭐⭐ - Excelente</option>
+          <option value="4">⭐⭐⭐⭐ - Bueno</option>
+          <option value="3">⭐⭐⭐ - Normal</option>
+          <option value="2">⭐⭐ - Malo</option>
+          <option value="1">⭐ - Pésimo</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <textarea id="commentText" placeholder="Escribe tu comentario..." rows="3"></textarea>
+      </div>
+      
+      <button id="submitReview">Enviar valoración</button>
+    </div>
+    
+    <div id="reviewsList" class="reviews-list">
+      <div class="loading">Cargando...</div>
+    </div>
+    
+    
+<div style="text-align: center; margin-top: 12px; padding-top: 8px; border-top: 1px solid #eee;">
+  <a href="#" id="termsLink" style="font-size: 10px; color: #999; text-decoration: none;">📜 Términos y Condiciones</a>
+  <span style="font-size: 10px; color: #ccc; margin: 0 5px;">|</span>
+  <a href="#" id="privacyLink" style="font-size: 10px; color: #999; text-decoration: none;">🔒 Política de Privacidad</a>
+</div>
+    
+    
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

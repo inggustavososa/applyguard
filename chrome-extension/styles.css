@@ -1,0 +1,20 @@
+.applyguard-badge {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #1a472a, #2e7d32);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 30px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.applyguard-badge:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}

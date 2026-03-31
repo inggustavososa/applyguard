@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "ApplyGuard",
+  "version": "1.0",
+  "description": "Verifica si las ofertas de trabajo son reales y protege tus postulaciones",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+ "host_permissions": [
+    "https://*.linkedin.com/*",
+    "https://*.infojobs.net/*",
+    "https://*.indeed.com/*",
+    "https://*.computrabajo.com/*",
+    "https://*.seek.com.au/*",
+    "https://*.stepstone.de/*",
+    "https://*.stepstone.at/*",
+    "https://*.stepstone.ch/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.linkedin.com/jobs/*",
+        "https://*.infojobs.net/*",
+        "https://*.indeed.com/*",
+        "https://*.computrabajo.com/*",
+        "https://*.seek.com.au/*",
+        "https://*.stepstone.de/*",
+        "https://*.stepstone.at/*",
+        "https://*.stepstone.ch/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

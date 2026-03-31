@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 700px; font-family: 'Segoe UI', sans-serif; background: #dbdce3; }
+    .container { display: flex; min-height: 500px; }
+    
+    /* Panel izquierdo */
+    .sidebar {
+      width: 200px;
+      background: linear-gradient(135deg, #02589e, #000919);
+      color: white;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .logo-section {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    
+    .logo-section img {
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .logo-section h1 {
+      font-size: 18px;
+      color: white;
+    }
+    
+    .logo-section p {
+      font-size: 10px;
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+    
+    .user-section {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .user-email {
+      font-size: 11px;
+      word-break: break-all;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+    
+    .nickname-section {
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .nickname-label {
+      font-size: 10px;
+      opacity: 0.7;
+      margin-bottom: 4px;
+    }
+    
+    .nickname-value {
+      font-size: 14px;
+      font-weight: bold;
+      color: #fe7d00;
+      cursor: pointer;
+    }
+    
+    .nickname-value:hover {
+      text-decoration: underline;
+    }
+    
+    .btn-sidebar {
+      width: 100%;
+      padding: 8px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-size: 12px;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+    
+    .btn-sidebar:hover {
+      background: #fe7d00;
+    }
+    
+    .logout-btn {
+      background: rgba(220, 60, 50, 0.6);
+    }
+    
+    .logout-btn:hover {
+      background: #e74c3c;
+    }
+    
+    .legal-links {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 10px;
+    }
+    
+    .legal-links a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 6px;
+      opacity: 0.7;
+    }
+    
+    .legal-links a:hover {
+      opacity: 1;
+      color: #fe7d00;
+    }
+    
+    /* Panel derecho */
+    .main-content {
+      flex: 1;
+      padding: 16px;
+      background: #dbdce3;
+      overflow-y: auto;
+      max-height: 550px;
+    }
+    
+    /* Formularios */
+    .form-container {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .form-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #02589e;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    
+    .form-subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
+    
+    .form-group input, 
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 14px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    
+    .form-group input:focus, 
+    .form-group select:focus {
+      outline: none;
+      border-color: #02589e;
+      box-shadow: 0 0 0 3px rgba(2, 88, 158, 0.1);
+    }
+    
+    .form-row {
+      display: flex;
+      gap: 16px;
+    }
+    
+    .form-row .form-group {
+      flex: 1;
+    }
+    
+    .btn-primary {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #02589e, #000919);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(2, 88, 158, 0.3);
+    }
+    
+    .toggle-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+    
+    .toggle-link a {
+      color: #02589e;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    .toggle-link a:hover {
+      text-decoration: underline;
+    }
+    
+    .error-message {
+      background: #ffebee;
+      color: #c62828;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      border-left: 4px solid #c62828;
+    }
+    
+    .success-message {
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2e7d32;
+    }
+    
+    /* Reviews */
+    .job-info {
+      background: white;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #dbdce3;
+    }
+    
+    .job-title {
+      font-weight: bold;
+      font-size: 14px;
+      color: #02589e;
+    }
+    
+    .company {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+    
+    .review-form {
+      background: white;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #dbdce3;
+    }
+    
+    .review-form .form-group {
+      margin-bottom: 12px;
+    }
+    
+    .review-form label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #000919;
+    }
+    
+    .review-form select, .review-form textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #dbdce3;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: inherit;
+    }
+    
+    .review-form textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    
+    .review-result {
+      margin-top: 12px;
+      padding: 10px;
+      background: #e8f5e9;
+      border-radius: 8px;
+      border-left: 4px solid #fe7d00;
+      font-size: 12px;
+    }
+    
+    .reviews-list {
+      background: white;
+      border-radius: 12px;
+      padding: 8px;
+      max-height: 280px;
+      overflow-y: auto;
+      border: 1px solid #dbdce3;
+    }
+    
+    .review-item {
+      padding: 10px;
+      border-bottom: 1px solid #dbdce3;
+    }
+    
+    .review-item:last-child {
+      border-bottom: none;
+    }
+    
+    .review-text {
+      font-size: 12px;
+      color: #555;
+      margin-top: 6px;
+    }
+    
+    .loading, .no-reviews {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+    }
+    
+    .delete-section {
+      margin-top: 12px;
+      padding: 12px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #dbdce3;
+      margin-bottom: 16px;
+    }
+    
+    .delete-section input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #dbdce3;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 11px;
+    }
+    
+    .delete-section input:focus {
+      outline: none;
+      border-color: #02589e;
+    }
+    
+    .btn-delete {
+      width: 100%;
+      padding: 8px;
+      background: #fe7d00;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.2s;
+    }
+    
+    .btn-delete:hover {
+      background: #e66a00;
+    }
+    
+    /* Idioma */
+    .language-section {
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .language-label {
+      font-size: 10px;
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+    
+    .language-select {
+      width: 100%;
+      padding: 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      color: white;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    
+    .language-select option {
+      background: #02589e;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Panel izquierdo -->
+  <div class="sidebar">
+    <div>
+      <div class="logo-section">
+        <img src="icons/icon128.png" alt="ApplyGuard">
+        <h1>ApplyGuard</h1>
+        <p id="sloganText">Protege tus postulaciones</p>
+      </div>
+      
+      <div id="userSection" style="display: none;">
+        <div class="user-section">
+          <div class="user-email" id="sidebarUserEmail">—</div>
+          <button id="sidebarLogoutBtn" class="btn-sidebar logout-btn">Cerrar sesión</button>
+        </div>
+        
+        <div class="nickname-section">
+          <div class="nickname-label">👤 Tu nombre público</div>
+          <div class="nickname-value" id="sidebarNickname">—</div>
+        </div>
+      </div>
+      
+      <div class="language-section">
+        <div class="language-label">🌐 Idioma</div>
+        <select id="languageSelect" class="language-select">
+          <option value="es">🇪🇸 Español</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="pt">🇵🇹 Português</option>
+        </select>
+      </div>
+      
+      <div id="loginSection" style="display: none;">
+        <div class="user-section">
+          <button id="sidebarLoginBtn" class="btn-sidebar">Iniciar sesión</button>
+          <button id="sidebarRegisterBtn" class="btn-sidebar" style="margin-top: 8px;">Registrarse</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="legal-links">
+      <a href="terms.html" target="_blank" id="linkTerms">📋 Términos de uso</a>
+      <a href="privacy.html" target="_blank" id="linkPrivacy">🔒 Política de privacidad</a>
+    </div>
+  </div>
+  
+  <!-- Panel derecho -->
+  <div class="main-content">
+    <div id="authContainer"></div>
+    
+    <div id="mainContent" style="display: none;">
+      <div class="job-info">
+        <div class="job-title" id="jobTitle">Cargando...</div>
+        <div class="company" id="companyName">—</div>
+      </div>
+      
+      <div class="review-form">
+        <div class="form-group">
+          <label id="verdictLabel">Dictamen</label>
+          <select id="verdictSelect">
+            <option value="real">✅ Real</option>
+            <option value="fake">❌ Falso</option>
+            <option value="suspicious">⚠️ Sospechoso</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label id="ratingLabel">Puntuación</label>
+          <select id="ratingSelect">
+            <option value="5">⭐⭐⭐⭐⭐ - Excelente</option>
+            <option value="4">⭐⭐⭐⭐ - Bueno</option>
+            <option value="3">⭐⭐⭐ - Normal</option>
+            <option value="2">⭐⭐ - Malo</option>
+            <option value="1">⭐ - Pésimo</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea id="commentText" placeholder="Escribe tu comentario..." rows="3"></textarea>
+        </div>
+        <button id="submitReview" class="btn-primary">Enviar valoración</button>
+        <div id="reviewResult" class="review-result" style="display: none;">
+          <div id="reviewResultMessage"></div>
+        </div>
+      </div>
+      
+      <div class="delete-section">
+        <input type="text" id="deleteCodeInput" placeholder="Código de review (ej: RV-A3F9K2)">
+        <button id="deleteReviewBtn" class="btn-delete">Eliminar mi review</button>
+      </div>
+      
+      <div id="reviewsList" class="reviews-list">
+        <div class="loading">Cargando...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="supabase.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
